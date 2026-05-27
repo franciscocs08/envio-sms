@@ -9,15 +9,17 @@ class CedenteSeeder extends Seeder
 {
     public function run()
     {
-        Cedente::insert([
-            [
-                'nombre'    => 'Empresa Prueba A',
-                'rut'       => '9.999.999-9', /* RUT de ejemplo no se sabe si es necesario en cedentes */
-                'ops_token' => null,
-                'ops_from'  => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $token = env('OPS_TOKEN_DEFAULT', null);
+        $from  = env('OPS_FROM_DEFAULT', null);
+
+        $cedentes = ['AIEP', 'UNAB', 'MASIVA', 'SALDO', 'UVM'];
+
+        foreach ($cedentes as $nombre) {
+            Cedente::create([
+                'nombre'    => $nombre,
+                'ops_token' => $token,
+                'ops_from'  => $from,
+            ]);
+        }
     }
 }

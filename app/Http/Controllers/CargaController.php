@@ -74,6 +74,10 @@ class CargaController extends Controller
             return back()->withInput()->with('error', 'El CSV debe tener al menos 2 columnas: RUT (col A) y Teléfono (col B).');
         }
 
+        if (strtolower(trim($primeraFila[1])) !== 'telefono' && strtolower(trim($primeraFila[1])) !== 'fono' && strtolower(trim($primeraFila[1])) !== 'celular') {
+            return back()->withInput()->with('error', 'La columna B debe tener encabezado "Teléfono", "Fono" o "Celular".');
+        }
+
         // // NUEVA VALIDACIÓN: Verificar que la columna A sea un RUT válido
         // $posibleRut = trim($primeraFila[0]);
 

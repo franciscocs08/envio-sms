@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cedente extends Model
 {
-    protected $fillable = ['nombre', 'rut', 'ops_token', 'ops_from'];
+    protected $fillable = ['nombre', 'ops_token', 'ops_from'];
 
     public function users()
     {

@@ -10,8 +10,7 @@ class CreateCedentesTable extends Migration
     {
         Schema::create('cedentes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 150);
-            $table->string('rut', 20)->unique();
+            $table->string('nombre', 150)->unique();
             $table->string('ops_token', 500)->nullable();
             $table->string('ops_from', 20)->nullable();
             $table->timestamps();

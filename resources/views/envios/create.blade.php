@@ -75,17 +75,69 @@
 
 @push('scripts')
 <script>
-    document.querySelector('[name=plantilla_id]').addEventListener('change', function () {
-        const opt     = this.options[this.selectedIndex];
-        const preview = document.getElementById('preview-contenido');
-        const texto   = document.getElementById('texto-preview');
+document.addEventListener('DOMContentLoaded', function () {
+    const cedenteSelect = document.getElementById('cedente_id');
+    const cargaSelect = document.querySelector('[name=carga_id]');
+    const plantillaSelect = document.querySelector('[name=plantilla_id]');
+    const preview = document.getElementById('preview-contenido');
+    const texto = document.getElementById('texto-preview');
 
-        if (opt.value) {
-            texto.textContent = opt.dataset.contenido;
-            preview.style.display = '';
-        } else {
-            preview.style.display = 'none';
+    // Función genérica para validar la relación con el Cedente
+    function validarCedente(selectElement, tipoElemento) {
+        const opt = selectElement.options[selectElement.selectedIndex];
+        const cedenteId = cedenteSelect.value;
+
+        // Si hay un elemento seleccionado y un cedente seleccionado
+        if (opt.value && cedenteId) {
+            const elementoCedente = opt.dataset.cedente;
+
+            // Si el cedente del elemento no coincide con el seleccionado en el formulario
+            if (elementoCedente && elementoCedente !== cedenteId) {
+                alert(`La ${tipoElemento} seleccionada pertenece a un cedente diferente al seleccionado. Por favor, elija una opción compatible o cambie el cedente.`);
+                
+                // Resetear el select que causó el conflicto
+                selectElement.value = '';
+                
+                // Si lo que falló fue la plantilla, ocultamos la vista previa
+                if (tipoElemento === 'plantilla') {
+                    texto.textContent = '';
+                    preview.style.display = 'none';
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Evento para el cambio de Carga
+    cargaSelect.addEventListener('change', function () {
+        validarCedente(this, 'carga de contactos');
+    });
+
+    // Evento para el cambio de Plantilla
+    plantillaSelect.addEventListener('change', function () {
+        if (validarCedente(this, 'plantilla')) {
+            // Si la validación pasa, mostrar la vista previa
+            const opt = this.options[this.selectedIndex];
+            if (opt.value) {
+                texto.textContent = opt.dataset.contenido;
+                preview.style.display = '';
+            } else {
+                preview.style.display = 'none';
+            }
         }
     });
+
+    // Evento por si cambian el Cedente cuando ya hay cosas seleccionadas
+    cedenteSelect.addEventListener('change', function () {
+        // Validar ambos selectores con el nuevo cedente
+        if (cargaSelect.value) {
+            validarCedente(cargaSelect, 'carga de contactos');
+        }
+        if (plantillaSelect.value) {
+            validarCedente(plantillaSelect, 'plantilla');
+        }
+    });
+});
 </script>
 @endpush
