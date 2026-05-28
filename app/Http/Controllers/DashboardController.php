@@ -30,6 +30,7 @@ class DashboardController extends Controller
             'total'      => (clone $query)->count(),
             'entregados' => (clone $query)->where('envio_detalles.estado', 'Entregado')->count(),
             'leidos'     => (clone $query)->where('envio_detalles.estado', 'Leído')->count(),
+            'expirados'   => (clone $query)->where('envio_detalles.estado', 'Expirado')->count(),
             'fallidos'   => (clone $query)->where('envio_detalles.estado', 'Fallido')->count(),
         ];
 

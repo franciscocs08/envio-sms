@@ -10,6 +10,7 @@
     .kpi-card.entregado { border-color: #22c55e; }
     .kpi-card.leido     { border-color: #14b8a6; }
     .kpi-card.fallido   { border-color: #ef4444; }
+    .kpi-card.expirado   { border-color: #8b8985; }
     .kpi-value { font-size: 2rem; font-weight: 700; }
 </style>
 @endpush
@@ -46,6 +47,12 @@
         <div class="card kpi-card entregado p-3">
             <div class="text-muted small mb-1">Entregados</div>
             <div class="kpi-value" style="color:#22c55e">{{ number_format($kpis['entregados']) }}</div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card kpi-card expirado p-3">
+            <div class="text-muted small mb-1">Expirados</div>
+            <div class="kpi-value" style="color:#8b8985">{{ number_format($kpis['expirados']) }}</div>
         </div>
     </div>
     <!-- <div class="col-sm-6 col-xl-3">
